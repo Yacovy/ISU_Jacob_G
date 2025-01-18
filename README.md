@@ -1,7 +1,12 @@
 # ISU_Jacob_G
-	Welcome to Disc Golf on Java, this will be a quick breakdown of key variables in this game
-	First there is menuState, which is the main menu controller for all parts of the game. 1 represent the core gameplay. 2 represents the disc creation section, 3 represents the intro sequence and 4 exits the program. To return to the user selecting the menuState, a placeholder value is used at the end of every loop.
-	To create the map of the game I used an array called course that had a fixed size of 50 by 30. By then printing it out in rows of 30, it allowed the illusion of a 2d map. The variable location then allowed me to track the players position within the map. Position is simply an integer that gets modified by specific values to move the player in a certain direction(Ex: subtracting by 50 will move the player up one row, adding one will move the player to the right). Also obstacles are defined at this stage with the specific course selection following code that modifies course to have out of bounds “/”, trees “t” and open space ”o”.
+	Hi helo
+   
+   
+   
+   
+Welcome to Disc Golf on Java, this will be a quick breakdown of key variables in this game
+First there is menuState, which is the main menu controller for all parts of the game. 1 represent the core gameplay. 2 represents the disc creation section, 3 represents the intro sequence and 4 exits the program. To return to the user selecting the menuState, a placeholder value is used at the end of every loop.
+To create the map of the game I used an array called course that had a fixed size of 50 by 30. By then printing it out in rows of 30, it allowed the illusion of a 2d map. The variable location then allowed me to track the players position within the map. Position is simply an integer that gets modified by specific values to move the player in a certain direction(Ex: subtracting by 50 will move the player up one row, adding one will move the player to the right). Also obstacles are defined at this stage with the specific course selection following code that modifies course to have out of bounds “/”, trees “t” and open space ”o”.
 
 fadeTurnCounter is used in a for loop that counts to two and is used to determine if it is the first or second half of the throw so that fade or turn can be properly applied. The integer speedCalc was used to move the disc until it got to its speed number twice.
 
