@@ -5,42 +5,42 @@ import java.util.Scanner;
     public class main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String menu_state = "0";
-        ArrayList<String> disc_names = new ArrayList<String>();
-        ArrayList<Integer> disc_speed = new ArrayList<Integer>();
-        ArrayList<Integer> disc_fade = new ArrayList<Integer>();
-        ArrayList<Integer> disc_turn = new ArrayList<Integer>();
+        String menuState = "0";
+        ArrayList<String> discNames = new ArrayList<String>();
+        ArrayList<Integer> discSpeed = new ArrayList<Integer>();
+        ArrayList<Integer> discFade = new ArrayList<Integer>();
+        ArrayList<Integer> discTurn = new ArrayList<Integer>();
         System.out.println("PLEASE play this game in a full screen terminal for the best results");
         // entire game loop -> only exits when user edits
-        while (!menu_state.equals("4")){
+        while (!menuState.equals("4")){
         // menu section
         System.out.println("To start type 1");
         System.out.println("To create your own discs type 2");
         System.out.println("To get an intro to the game type 3");
         System.out.println("To quit type 4");
-        menu_state = sc.nextLine();
+        menuState = sc.nextLine();
         
         //Game loop
-        while(menu_state.equals("1")){
+        while(menuState.equals("1")){
             //creating default discs if someone doesn't have recommended discs
          
-            if(!(disc_speed.contains(1)||disc_speed.contains(2)||disc_speed.contains(3)||disc_speed.contains(4))){
-            disc_names.add("Putter");
-            disc_speed.add(2);
-            disc_fade.add(0);
-            disc_turn.add(0);
+            if(!(discSpeed.contains(1)||discSpeed.contains(2)||discSpeed.contains(3)||discSpeed.contains(4))){
+            discNames.add("Putter");
+            discSpeed.add(2);
+            discFade.add(0);
+            discTurn.add(0);
             }
-            if(!(disc_speed.contains(5)||disc_speed.contains(6)||disc_speed.contains(7)||disc_speed.contains(8))){
-            disc_names.add("Midrange");
-            disc_speed.add(6);
-            disc_fade.add(2);
-            disc_turn.add(-2);
+            if(!(discSpeed.contains(5)||discSpeed.contains(6)||discSpeed.contains(7)||discSpeed.contains(8))){
+            discNames.add("Midrange");
+            discSpeed.add(6);
+            discFade.add(2);
+            discTurn.add(-2);
             }
-            if(!(disc_speed.contains(9)||disc_speed.contains(10)||disc_speed.contains(11)||disc_speed.contains(12))){
-            disc_names.add("Driver");
-            disc_speed.add(10);
-            disc_fade.add(2);
-            disc_turn.add(-2);
+            if(!(discSpeed.contains(9)||discSpeed.contains(10)||discSpeed.contains(11)||discSpeed.contains(12))){
+            discNames.add("Driver");
+            discSpeed.add(10);
+            discFade.add(2);
+            discTurn.add(-2);
             }
 
             //course creation represented by a 50 by 30 space
@@ -140,7 +140,7 @@ import java.util.Scanner;
             //Contains main gameplay loop-> always prints map before user input
             int playing = 1;
             int strokes = 0;
-            String [] tempcourse = course;
+            String [] tempCourse = course;
             while(playing==1){
                 //printing map
                 for(int i = 0; i < 50 * 30; i++){
@@ -148,14 +148,14 @@ import java.util.Scanner;
                     if( i%50==0){
                     System.out.println();
                     }
-                    System.out.print(tempcourse[i]);
+                    System.out.print(tempCourse[i]);
                 }
-                tempcourse = course;
+                tempCourse = course;
                 System.out.println();
                 //prints user discs
-                for(int d=0;d<disc_names.size();d++){
+                for(int d=0;d<discNames.size();d++){
                     System.out.println();
-                    System.out.println("name: " + disc_names.get(d) + "  speed: " + disc_speed.get(d) + "  turn: " + disc_turn.get(d) + "  fade: " + disc_fade.get(d));
+                    System.out.println("name: " + discNames.get(d) + "  speed: " + discSpeed.get(d) + "  turn: " + discTurn.get(d) + "  fade: " + discFade.get(d));
                 }
                 System.out.println();
                 int confirmationDisc = 0;
@@ -167,9 +167,9 @@ import java.util.Scanner;
                 
                     System.out.println("Which disc would you like to throw");
                     String discThrown = sc.nextLine();
-                    if(disc_names.contains(discThrown)){
+                    if(discNames.contains(discThrown)){
                         confirmationDisc=1;
-                        discThrownNum = disc_names.indexOf(discThrown);
+                        discThrownNum = discNames.indexOf(discThrown);
                     }
                     else{
                         System.out.println("NON VALID DISC. TRY AGAIN");
@@ -187,7 +187,7 @@ import java.util.Scanner;
                 course[location] = "o";
                 //disc movement calculator 
                 for (int FadeTurnCount = 0; FadeTurnCount < 2; FadeTurnCount++){
-                    for (int beforeTurn = 0; beforeTurn < disc_speed.get(discThrownNum); beforeTurn++){
+                    for (int speedCalc = 0; speedCalc < discSpeed.get(discThrownNum); speedCalc++){
                        
                         // disc movement in linear directions
                         if(ThrowDir==1){
@@ -206,14 +206,14 @@ import java.util.Scanner;
                         if(course [locationAfterCheck].equals("/")){
                             System.out.println("Throw went OB");
                             location = locationBeforeCheck;
-                            beforeTurn = 1000;
+                            speedCalc = 1000;
                             FadeTurnCount= 1000;
                             strokes++;
                         }
                         else if(course [locationAfterCheck].equals("T")){
                             System.out.println("Throw hit a tree");
                             location = locationBeforeCheck;
-                            beforeTurn =1000;
+                            speedCalc =1000;
                             FadeTurnCount=1000;
                             
                         }
@@ -222,13 +222,13 @@ import java.util.Scanner;
                             location = locationAfterCheck;
                             playing = 2;
                             FadeTurnCount=1000;
-                            beforeTurn =1000;
+                            speedCalc =1000;
                         }
                         else{
                             locationBeforeCheck = locationAfterCheck;
                         }
                         //Turn movement(Early movement to the right)
-                        if ( (beforeTurn % 6 -(-disc_turn.get(discThrownNum)) == 0 || beforeTurn % 5-(-disc_turn.get(discThrownNum)) == 0|| beforeTurn % 7-(-disc_turn.get(discThrownNum)) == 0 || beforeTurn % 8 - (-disc_turn.get(discThrownNum))==0) && disc_turn.get(discThrownNum)!=0&&FadeTurnCount==0){
+                        if ( (speedCalc % 6 -(-discTurn.get(discThrownNum)) == 0 || speedCalc % 5-(-discTurn.get(discThrownNum)) == 0|| speedCalc % 7-(-discTurn.get(discThrownNum)) == 0 || speedCalc % 8 - (-discTurn.get(discThrownNum))==0) && discTurn.get(discThrownNum)!=0&&FadeTurnCount==0){
                             if(throwtype==1&&ThrowDir==1){
                                 locationAfterCheck = locationBeforeCheck + 1;
                             }
@@ -280,7 +280,7 @@ import java.util.Scanner;
                             }
                          //Fade movement(Late movement to the left)
                         }
-                        if ((beforeTurn % 6 -(disc_fade.get(discThrownNum)) == 0 || beforeTurn % 5-disc_fade.get(discThrownNum) == 0|| beforeTurn % 7-(disc_fade.get(discThrownNum)) == 0 || beforeTurn % 5-(disc_fade.get(discThrownNum)) == 0|| beforeTurn % 8-(-disc_fade.get(discThrownNum)) == 0)&& disc_fade.get(discThrownNum)!=0&&FadeTurnCount==1){
+                        if ((speedCalc % 6 -(discFade.get(discThrownNum)) == 0 || speedCalc % 5-discFade.get(discThrownNum) == 0|| speedCalc % 7-(discFade.get(discThrownNum)) == 0 || speedCalc % 5-(discFade.get(discThrownNum)) == 0|| speedCalc % 8-(-discFade.get(discThrownNum)) == 0)&& discFade.get(discThrownNum)!=0&&FadeTurnCount==1){
                            for (int i = 0; i < 2; i++) {
             
                                 if(throwtype==1&&ThrowDir==1){
@@ -352,7 +352,7 @@ import java.util.Scanner;
                 
         }
             System.out.println("You scored " + strokes + " on this hole. CONGRATS");
-            menu_state = "0";
+            menuState = "0";
 
 
 
@@ -363,56 +363,56 @@ import java.util.Scanner;
 
         }
         //disc creation loop
-        if(menu_state.equals("2")){
-            int creation_menu = 0;
+        if(menuState.equals("2")){
+            int creationMenu = 0;
             //creation menu
-            while(creation_menu != 3){
+            while(creationMenu != 3){
                 
                 System.out.println("To create a disc type 1");
                 System.out.println("To delete a disc type 2");
                 System.out.println("To exit this submenu disc type 3");
 
 
-                creation_menu = sc.nextInt();
+                creationMenu = sc.nextInt();
                 sc.nextLine();
                 //creating a disc
                 // in the list disc stats-> stats are broken into 3 parts speed turn and fade
-                if(disc_names.size() >= 10 && creation_menu != 3 && creation_menu != 2){
+                if(discNames.size() >= 10 && creationMenu != 3 && creationMenu != 2){
                     System.out.println("YOU HAVE TOO MANY DISCS (>10) Delete some to continue");
-                    creation_menu = 0;
+                    creationMenu = 0;
 
                 }
-                if(creation_menu == 1){
+                if(creationMenu == 1){
 
                     System.out.println("What is the name of the disc");
                     
                     String temp_name = sc.nextLine();
-                    disc_names.add(temp_name);
+                    discNames.add(temp_name);
                     System.out.println("What is the speed of the disc(1 to 12)");
                     int temp_speed = sc.nextInt();
-                    disc_speed.add(temp_speed);
+                    discSpeed.add(temp_speed);
                     System.out.println("What is the turn of the disc(0 to -4)");
                     int temp_turn = sc.nextInt();
-                    disc_turn.add(temp_turn);
+                    discTurn.add(temp_turn);
                     System.out.println("What is the fade of the disc(0 to 4)");
                     int temp_fade = sc.nextInt();
-                    disc_fade.add(temp_fade);
+                    discFade.add(temp_fade);
                 }
-                while(creation_menu==2){
-                    for(int d=0;d<disc_names.size();d++){
+                while(creationMenu==2){
+                    for(int d=0;d<discNames.size();d++){
                         System.out.println();
-                        System.out.println("name: " + disc_names.get(d) + "  speed: " + disc_speed.get(d) + "  turn: " + disc_turn.get(d) + "  fade: " + disc_fade.get(d));
+                        System.out.println("name: " + discNames.get(d) + "  speed: " + discSpeed.get(d) + "  turn: " + discTurn.get(d) + "  fade: " + discFade.get(d));
                     }
                     // disc deletion section
                     System.out.println("Input the name of the disc would you like to delete");
                     String tempName = sc.nextLine();
                     
-                    if (disc_names.contains(tempName)){
-                        disc_fade.remove(disc_names.indexOf(tempName));
-                        disc_speed.remove(disc_names.indexOf(tempName));
-                        disc_turn.remove(disc_names.indexOf(tempName));
-                        disc_names.remove(disc_names.indexOf(tempName));
-                        creation_menu = 0;
+                    if (discNames.contains(tempName)){
+                        discFade.remove(discNames.indexOf(tempName));
+                        discSpeed.remove(discNames.indexOf(tempName));
+                        discTurn.remove(discNames.indexOf(tempName));
+                        discNames.remove(discNames.indexOf(tempName));
+                        creationMenu = 0;
                     }
                     else{
                         System.out.println("NOT A VALID NAME, TRY AGAIN");
@@ -423,7 +423,7 @@ import java.util.Scanner;
         }
 
         // intro loop
-        while(menu_state.equals("3")){
+        while(menuState.equals("3")){
             System.out.println("Welcome to Disc Golf on Java, brought to you by the PDGA");
             System.out.println("Disc movement in this game is broken into three parts: Speed, Turn and Fade");
             System.out.println("Speed will determine the distance that the disc flies");
@@ -438,7 +438,7 @@ import java.util.Scanner;
             System.out.println("T tepresents a tree, your disc will simply fall down");
             System.out.println("For forhad throws the turn will be twoards the left and then  fade right");
             System.out.println("For backhand throws the  turn will be twoards the right and then fade left");
-            menu_state = "0";
+            menuState = "0";
         }
         
         
